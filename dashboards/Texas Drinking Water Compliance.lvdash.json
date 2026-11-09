@@ -1,0 +1,617 @@
+{
+  "datasets": [
+    {
+      "name": "a48eed5e",
+      "displayName": "violations",
+      "queryLines": [
+        "SELECT\n",
+        "  *,\n",
+        "  CASE WHEN is_health_based THEN 1 ELSE 0 END AS health_based_flag,\n",
+        "  CASE WHEN is_health_based THEN pwsid END AS health_based_pwsid\n",
+        "FROM workspace.sdwa_gold.fact_violations"
+      ]
+    },
+    {
+      "name": "a5697dfb",
+      "displayName": "counties",
+      "queryLines": [
+        "SELECT * FROM workspace.sdwa_gold.county_summary\n"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "53de2a17",
+      "displayName": "Overview",
+      "layout": [
+        {
+          "widget": {
+            "name": "total-violations",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "a48eed5e",
+                  "fields": [
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Total violations\n<p>&nbsp;</p>\n",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "count(*)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "557fb8c9",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "a48eed5e",
+                  "fields": [
+                    {
+                      "name": "sum(health_based_flag)",
+                      "expression": "SUM(`health_based_flag`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`is_health_based` IN (`is_health_based`) OR TRUE"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Health-based violations\n<p>&nbsp;</p>\n",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(health_based_flag)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 1,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "09be3b6b",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "a48eed5e",
+                  "fields": [
+                    {
+                      "name": "countdistinct(health_based_pwsid)",
+                      "expression": "COUNT(DISTINCT `health_based_pwsid`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Systems with health-based violations\n<p>&nbsp;</p>\n",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "countdistinct(health_based_pwsid)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 1,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "ae32ffad",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "a48eed5e",
+                  "fields": [
+                    {
+                      "name": "median(days_to_compliance)",
+                      "expression": "MEDIAN(`days_to_compliance`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Median days to return to compliance\n<p>&nbsp;</p>\n",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "median(days_to_compliance)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 1,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "violations-by-year",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "a48eed5e",
+                  "fields": [
+                    {
+                      "name": "violation_year",
+                      "expression": "`violation_year`"
+                    },
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Violations by year\n<p>&nbsp;</p>\n",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  }
+                ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "violation_year",
+                  "displayName": "Year",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "count(*)",
+                  "displayName": " ",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 6,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "5e0737af",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "a48eed5e",
+                  "fields": [
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    },
+                    {
+                      "name": "violation_category",
+                      "expression": "`violation_category`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Violations by category\n<p>&nbsp;</p>\n",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "count(*)",
+                  "displayName": " ",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "violation_category",
+                  "displayName": "Category",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "x-reversed"
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 4,
+            "width": 6,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "2379449b",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "a5697dfb",
+                  "fields": [
+                    {
+                      "name": "county",
+                      "expression": "`county`"
+                    },
+                    {
+                      "name": "active_systems",
+                      "expression": "`active_systems`"
+                    },
+                    {
+                      "name": "community_population_served",
+                      "expression": "`community_population_served`"
+                    },
+                    {
+                      "name": "pct_systems_with_health_based_violation",
+                      "expression": "`pct_systems_with_health_based_violation`"
+                    }
+                  ],
+                  "disaggregated": true,
+                  "orders": [
+                    {
+                      "direction": "DESC",
+                      "expression": "`pct_systems_with_health_based_violation`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "County compliance summary",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "county",
+                    "displayName": "County"
+                  },
+                  {
+                    "fieldName": "active_systems",
+                    "contentAlignment": "right",
+                    "displayName": "Active systems"
+                  },
+                  {
+                    "fieldName": "community_population_served",
+                    "contentAlignment": "right",
+                    "displayName": "Population served"
+                  },
+                  {
+                    "fieldName": "pct_systems_with_health_based_violation",
+                    "contentAlignment": "right",
+                    "format": {
+                      "type": "number-plain",
+                      "abbreviation": "none",
+                      "decimalPlaces": {
+                        "type": "max",
+                        "places": 1
+                      }
+                    },
+                    "displayName": "% systems with health-based violation",
+                    "formatTemplate": "{{ @formatted }}%"
+                  }
+                ],
+                "rowOrder": [
+                  {
+                    "by": "column-reversed",
+                    "field": {
+                      "index": 3
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 8,
+            "width": 12,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "003967f8",
+            "queries": [
+              {
+                "name": "dashboards/01f1d9704f8f122fb8142adea5c091cd/datasets/01f1d97088481ccd99398ea35d28f8e4_county",
+                "query": {
+                  "datasetName": "a48eed5e",
+                  "fields": [
+                    {
+                      "name": "county",
+                      "expression": "`county`"
+                    },
+                    {
+                      "name": "county_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "dashboards/01f1d9704f8f122fb8142adea5c091cd/datasets/01f1d970a1881961830b875d08384c43_county",
+                "query": {
+                  "datasetName": "a5697dfb",
+                  "fields": [
+                    {
+                      "name": "county",
+                      "expression": "`county`"
+                    },
+                    {
+                      "name": "county_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "county",
+                    "queryName": "dashboards/01f1d9704f8f122fb8142adea5c091cd/datasets/01f1d97088481ccd99398ea35d28f8e4_county"
+                  },
+                  {
+                    "fieldName": "county",
+                    "queryName": "dashboards/01f1d9704f8f122fb8142adea5c091cd/datasets/01f1d970a1881961830b875d08384c43_county"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 4,
+            "height": 1
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "canvasBackgroundColor": {
+        "light": "#E6E9EA",
+        "dark": "#1E2931"
+      },
+      "widgetBackgroundColor": {
+        "light": "#FFFFFF",
+        "dark": "#15181C"
+      },
+      "widgetBorderColor": {
+        "light": "#F3F5F6",
+        "dark": "#21292F"
+      },
+      "fontColor": {
+        "light": "#1A2127",
+        "dark": "#EEF0F2"
+      },
+      "selectionColor": {
+        "light": "#0E7AB9",
+        "dark": "#41ADEC"
+      },
+      "visualizationColors": [
+        "#A6CEE3",
+        "#1F78B4",
+        "#B2DF8A",
+        "#33A02C",
+        "#FB9A99",
+        "#E31A1C",
+        "#FDBF6F",
+        "#FF7F00",
+        "#CAB2D6",
+        "#6A3D9A",
+        "#FFFF99",
+        "#B15928"
+      ],
+      "widgetHeaderAlignment": "LEFT",
+      "fontFamily": "Inter",
+      "widgetPadding": 16,
+      "widgetMargin": 8,
+      "widgetCornerRadius": 16,
+      "widgetShadow": 50,
+      "continuousGradient": {
+        "lightMode": {
+          "fromCategoricalIndex": 0
+        },
+        "darkMode": {
+          "fromCategoricalIndex": 0
+        }
+      },
+      "fontSettings": {
+        "base": {
+          "fontFamily": "Inter",
+          "fontColor": {
+            "light": "#1A2127",
+            "dark": "#EEF0F2"
+          },
+          "fontSize": 14,
+          "fontWeight": 400
+        },
+        "widgetTitle": {
+          "fontSize": 16,
+          "fontWeight": 500
+        },
+        "widgetDescription": {
+          "fontSize": 14,
+          "fontWeight": 400
+        },
+        "fieldTitle": {
+          "textCase": "TEXT_CASE_UPPERCASE",
+          "fontColor": {
+            "light": "#31373D",
+            "dark": "#D6D8DA"
+          },
+          "fontSize": 13,
+          "fontWeight": 400
+        },
+        "fieldValue": {
+          "fontColor": {
+            "light": "#31373D",
+            "dark": "#D6D8DA"
+          },
+          "fontSize": 13,
+          "fontWeight": 400
+        }
+      },
+      "gridLineColor": {
+        "light": "#D6D7D8",
+        "dark": "#3C3E42"
+      },
+      "axisLineColor": {
+        "light": "#B0B4B6",
+        "dark": "#555E64"
+      }
+    },
+    "applyModeEnabled": false
+  }
+}
